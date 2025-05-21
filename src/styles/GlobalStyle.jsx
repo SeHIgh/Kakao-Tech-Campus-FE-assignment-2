@@ -6,13 +6,19 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.5;
 
     width: 100%;
-    height: 100dvh;
+    min-height: 100dvh;
     
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
+  
+  #root{
+    width: 100%;
+    min-height: 100dvh;
+  }
+
   button{
       padding: 8px 16px;
       border: 1px solid transparent;

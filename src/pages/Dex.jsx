@@ -1,3 +1,13 @@
+const Dashboard = () => {
+    
+}
+const PokemonList = () => {
+
+}
+const PokemonCard = () => {
+
+}
+
 export const Dex = () => {
     return (
         <div>

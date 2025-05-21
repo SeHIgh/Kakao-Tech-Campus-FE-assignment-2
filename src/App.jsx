@@ -1,16 +1,12 @@
-import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home } from "./pages/Home";
-import { Dex } from "./pages/Dex";
+import Router from "./shared/Router";
+import GlobalStyle from "./styles/GlobalStyle";
 
 function App() {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/Dex" element={<Dex />} />
-            </Routes>
-        </BrowserRouter>
+        <>
+            <GlobalStyle />
+            <Router />
+        </>
     );
 }
 

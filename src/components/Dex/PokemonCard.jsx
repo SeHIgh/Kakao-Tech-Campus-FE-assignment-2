@@ -44,7 +44,7 @@ const Title = styled.h1`
 const Id = styled.p`
     font-size: 1rem;
     font-weight: semibold;
-    color: #555;
+    color: #888;
 `;
 
 // 포켓몬 타입 리스트 컨테이너

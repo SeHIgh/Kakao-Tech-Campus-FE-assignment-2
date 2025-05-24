@@ -19,6 +19,14 @@ const Card = styled.div`
     align-items: center;
     gap: 6px;
     font-family: "Arial", sans-serif;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease-in-out;
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
 `;
 
 // 포켓몬 이미지
@@ -37,7 +45,7 @@ const Title = styled.h1`
 const Id = styled.p`
     font-size: 1rem;
     font-weight: semibold;
-    color: #555;
+    color: #888;
 `;
 
 // 포켓몬 타입 리스트 컨테이너
@@ -67,7 +75,7 @@ const PokemonCard = ({ pokemon, isAdded, onToggleDex }) => {
         >
             <Img src={pokemon.img_url} alt={pokemon.korean_name} />
             <Title>{pokemon.korean_name}</Title>
-            <Id>No. {String(pokemon.id).padStart(3, '0')}</Id>
+            <Id>No. {String(pokemon.id).padStart(3, "0")}</Id>
             <Types>
                 {pokemon.types.map((type, idx) => (
                     <Type key={idx + type} backgroundColor={getTypeColor(type)}>

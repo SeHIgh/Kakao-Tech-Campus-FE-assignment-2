@@ -2,6 +2,8 @@ import styled from "styled-components";
 import PokemonList from "../components/Dex/PokemonList";
 import Dashboard from "../components/Dex/Dashboard";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AppCont = styled.div`
     width: 100%;
@@ -26,10 +28,11 @@ export const Dex = () => {
                 ...filtered,
                 ...Array(6 - filtered.length).fill(null),
             ]);
+            toast.info("포켓몬이 덱에서 삭제되었습니다.");
         } else {
             const filled = dex.filter((pokeid) => pokeid !== null);
             if (filled.length >= 6) {
-                alert("포켓몬을 더 이상 선택할 수 없습니다. (최대 6마리)");
+                toast.error("포켓몬을 더 이상 선택할 수 없습니다.");
                 return;
             }
             setDex([
@@ -37,11 +40,13 @@ export const Dex = () => {
                 id,
                 ...Array(6 - filled.length - 1).fill(null),
             ]);
+            toast.success("포켓몬이 덱에 추가되었습니다!");
         }
     };
 
     return (
         <AppCont>
+            <ToastContainer position="top-center" autoClose={2000} hideProgressBar={false} />
             <Dashboard dex={dex} onToggleDex={handleToggleDex} />
             <PokemonList dex={dex} onToggleDex={handleToggleDex} />
         </AppCont>

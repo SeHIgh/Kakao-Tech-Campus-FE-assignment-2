@@ -3,9 +3,8 @@ import styled from "styled-components";
 import { getTypeColor } from "../data/pokemonType";
 import MOCK_DATA from "../data/mock";
 import DexToggleBtn from "../components/DexToggleBtn";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useState, useEffect } from "react";
 
 const DEX_STORAGE_KEY = "myPokemonDex";
 
@@ -89,41 +88,9 @@ const Btns = styled.div`
 `;
 
 export const Detail = () => {
-    const [dex, setDex] = useState([]);
     const [searchParams] = useSearchParams();
     const id = Number(searchParams.get("id"));
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const myDex = localStorage.getItem(DEX_STORAGE_KEY);
-        setDex(myDex ? JSON.parse(myDex) : []);
-    }, []);
-
-    const isAdded = dex.includes(id);
-
-    // 덱 추가/삭제 함수
-    const handleToggleDex = () => {
-        let newDex;
-        if (isAdded) {
-            const filtered = dex.filter((pokeid) => pokeid !== id);
-            newDex = [...filtered, ...Array(6 - filtered.length).fill(null)];
-            toast.info("포켓몬이 덱에서 삭제되었습니다.");
-        } else {
-            const filled = dex.filter((pokeid) => pokeid !== null);
-            if (filled.length >= 6) {
-                toast.error("포켓몬을 더 이상 선택할 수 없습니다.");
-                return;
-            }
-            newDex = [
-                ...filled,
-                id,
-                ...Array(6 - filled.length - 1).fill(null),
-            ];
-            toast.success("포켓몬이 덱에 추가되었습니다!");
-        }
-        setDex(newDex);
-        localStorage.setItem(DEX_STORAGE_KEY, JSON.stringify(newDex));
-    };
 
     // id로 포켓몬 데이터 찾기
     const pokemon = MOCK_DATA.find((p) => p.id === id);
@@ -156,7 +123,7 @@ export const Detail = () => {
             </Types>
             <Description>{pokemon.description}</Description>
             <Btns>
-                <DexToggleBtn isAdded={isAdded} onClick={handleToggleDex} />
+                <DexToggleBtn pokemonId={pokemon.id} />
                 <BackBtn onClick={() => navigate(-1)}>뒤로 가기</BackBtn>
             </Btns>
         </DetailCont>

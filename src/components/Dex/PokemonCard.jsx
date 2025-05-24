@@ -55,8 +55,7 @@ const Type = styled.div`
     background-color: ${(props) => props.backgroundColor};
 `;
 
-const PokemonCard = ({ pokemon, isAdded, onToggleDex }) => {
-    // useNavigate 을 이용하여 페이지 이동 구현
+const PokemonCard = ({ pokemon }) => {
     const navigate = useNavigate();
 
     return (
@@ -75,13 +74,7 @@ const PokemonCard = ({ pokemon, isAdded, onToggleDex }) => {
                     </Type>
                 ))}
             </Types>
-            <DexToggleBtn
-                isAdded={isAdded}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    onToggleDex(pokemon.id);
-                }}
-            />
+            <DexToggleBtn pokemonId={pokemon.id} />
         </Card>
     );
 };

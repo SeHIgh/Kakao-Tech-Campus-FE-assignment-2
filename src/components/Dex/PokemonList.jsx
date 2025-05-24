@@ -47,7 +47,7 @@ const List = styled.div`
 `;
 
 // 포켓몬 전체 리스트
-const PokemonList = ({ dex, onToggleDex }) => {
+const PokemonList = () => {
     const [pokeList, setPokeList] = useState([]);
 
     useEffect(() => {
@@ -62,8 +62,6 @@ const PokemonList = ({ dex, onToggleDex }) => {
                     <PokemonCard
                         key={idx + pokemon.id}
                         pokemon={pokemon}
-                        isAdded={dex.includes(pokemon.id)}
-                        onToggleDex={onToggleDex}
                     />
                 ))}
             </List>

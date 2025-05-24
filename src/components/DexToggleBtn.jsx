@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useDexContext } from "../shared/DexContext";
+import { toast } from "react-toastify";
 
 // 덱 추가 및 삭제 버튼
 const Btn = styled.button`
@@ -18,10 +20,25 @@ const Btn = styled.button`
     }
 `;
 
-const DexToggleBtn = ({ isAdded, onClick }) => (
-    <Btn isAdded={isAdded} onClick={onClick}>
-        {isAdded ? "삭제" : "추가"}
-    </Btn>
-);
+const DexToggleBtn = ({ pokemonId }) => {
+    const { dex, handleToggleDex } = useDexContext();
+    const isAdded = dex.includes(pokemonId);
+
+    const handleClick = (e) => {
+        e.stopPropagation();
+        handleToggleDex(
+            pokemonId,
+            () => toast.success("포켓몬이 덱에 추가되었습니다!"),
+            () => toast.info("포켓몬이 덱에서 삭제되었습니다."),
+            () => toast.error("포켓몬을 더 이상 선택할 수 없습니다.")
+        );
+    };
+
+    return (
+        <Btn isAdded={isAdded} onClick={handleClick}>
+            {isAdded ? "삭제" : "추가"}
+        </Btn>
+    );
+};
 
 export default DexToggleBtn;

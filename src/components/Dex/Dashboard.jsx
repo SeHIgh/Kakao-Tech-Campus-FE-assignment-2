@@ -3,6 +3,7 @@ import PokemonCard from "./PokemonCard";
 import MOCK_DATA from "../../data/mock";
 import styled from "styled-components";
 import pokeball from "../../assets/pokeball.png";
+import { useDexContext } from "../../shared/DexContext";
 
 const DashboardCont = styled.div`
     width: 100%;
@@ -84,7 +85,9 @@ const EmptyImg = styled.img`
 `;
 
 // 나만의 포켓몬 덱 대시보드
-const Dashboard = ({ dex, onToggleDex }) => {
+const Dashboard = ({ onToggleDex }) => {
+    // 전역 Context를 통해 덱 데이터 가져오기
+    const { dex } = useDexContext();
     const [pokeList] = useState(MOCK_DATA);
 
     // null이 아닌 id만 추출

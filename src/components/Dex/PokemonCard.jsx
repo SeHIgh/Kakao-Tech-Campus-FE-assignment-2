@@ -19,6 +19,13 @@ const Card = styled.div`
     align-items: center;
     gap: 6px;
     font-family: "Arial", sans-serif;
+    cursor: pointer;
+
+    transition: all 0.3s ease-in-out;
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
 `;
 
 // 포켓몬 이미지
@@ -37,7 +44,7 @@ const Title = styled.h1`
 const Id = styled.p`
     font-size: 1rem;
     font-weight: semibold;
-    color: #555;
+    color: #888;
 `;
 
 // 포켓몬 타입 리스트 컨테이너

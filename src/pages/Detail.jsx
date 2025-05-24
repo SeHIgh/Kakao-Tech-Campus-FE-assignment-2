@@ -113,7 +113,7 @@ export const Detail = () => {
             />
             <Img src={pokemon.img_url} alt={pokemon.korean_name} />
             <Name>{pokemon.korean_name}</Name>
-            <Id>No. {pokemon.id}</Id>
+            <Id>No. {String(pokemon.id).padStart(3, '0')}</Id>
             <Types>
                 {pokemon.types.map((type) => (
                     <Type key={type} backgroundColor={getTypeColor(type)}>

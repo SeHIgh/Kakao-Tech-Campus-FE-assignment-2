@@ -2,16 +2,39 @@ import { useState } from "react";
 import PokemonCard from "./PokemonCard";
 import MOCK_DATA from "../../data/mock";
 import styled from "styled-components";
+import pokeball from "../../assets/pokeball.png";
 
 const DashboardCont = styled.div`
-    width: 90%;
+    width: 100%;
+    min-height: 340px;
+`;
+
+const DashboardTitle = styled.h1`
+    text-align: center;
+    font-size: 1.7rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: #f44336;
 `;
 
 const List = styled.div`
     width: 100%;
+    min-height: 320px;
+    height: 100%;
     padding: 16px;
-    background-color: #f2f2f2;
-    border: 2px solid #e0e0e0;
+
+    /* 포켓볼 처럼 배경 그라데이션 효과 적용 */
+    background: linear-gradient(
+        to bottom,
+        #f44336 0%,
+        #f44336 45%,
+        #58585a 45%,
+        #58585a 55%,
+        #fff 55%,
+        #fff 100%
+    );
+
+    border: 2px solid #58585a;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 
@@ -21,13 +44,13 @@ const List = styled.div`
     padding: 24px;
     justify-items: center;
 
-    /* @media (max-width: 600px) {
-        grid-template-columns: repeat(1, 1fr);
+    @media (max-width: 600px) {
+        grid-template-columns: repeat(2, 1fr);
         gap: 16px;
         padding: 12px;
     }
     @media (min-width: 601px) and (max-width: 1024px) {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 20px;
         padding: 16px;
     }
@@ -35,20 +58,46 @@ const List = styled.div`
         grid-template-columns: repeat(6, 1fr);
         gap: 24px;
         padding: 24px;
-    } */
+    }
+`;
+
+// 빈 슬롯 카드 스타일
+const EmptyCard = styled.div`
+    width: 100%;
+    min-width: 100px;
+    min-height: 290px;
+    border: 2px dashed #bdbdbd;
+    border-radius: 12px;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #bdbdbd;
+    font-size: 1.1rem;
+    font-weight: bold;
+`;
+
+// 로고 이미지 스타일
+const EmptyImg = styled.img`
+    width: 120px;
+    height: auto;
 `;
 
 // 나만의 포켓몬 덱 대시보드
 const Dashboard = ({ dex, onToggleDex }) => {
     const [pokeList] = useState(MOCK_DATA);
 
+    // null이 아닌 id만 추출
+    const filledDex = dex.filter((id) => id !== null);
+    const emptyCount = 6 - filledDex.length;
+
     return (
         <DashboardCont>
-            <h1>나만의 포켓몬 덱</h1>
+            <DashboardTitle>나만의 포켓몬 덱</DashboardTitle>
             <List>
-                {dex.map((id) => {
+                {/* 덱에 들어있는 포켓몬 카드 렌더링 (앞쪽) */}
+                {filledDex.map((id) => {
                     const pokemon = pokeList.find((p) => p.id === id);
-                    if (!pokemon) return null; // 혹시 id가 유효하지 않을 때 방어 코드
                     return (
                         <PokemonCard
                             key={id}
@@ -58,6 +107,12 @@ const Dashboard = ({ dex, onToggleDex }) => {
                         />
                     );
                 })}
+                {/* 부족한 개수만큼 빈 카드 추가 렌더링 (뒤쪽) */}
+                {Array.from({ length: emptyCount }, (_, idx) => (
+                    <EmptyCard key={"empty_" + idx}>
+                        <EmptyImg src={pokeball} alt="빈 덱" />
+                    </EmptyCard>
+                ))}
             </List>
         </DashboardCont>
     );

@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import DexToggleBtn from "../DexToggleBtn";
+import { useNavigate } from "react-router-dom";
+import { getTypeColor } from "../../data/pokemonType";
 
 // 포켓몬 카드 컨테이너
 const Card = styled.div`
-    /* width: 250px; */
-    width: 80%;
+    width: 100%;
     min-width: 100px;
+    min-height: 290px;
     border: 1px solid #ddd;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -13,20 +15,21 @@ const Card = styled.div`
     background-color: #f9f9f9;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
-    gap: 12px;
+    gap: 6px;
     font-family: "Arial", sans-serif;
 `;
 
 // 포켓몬 이미지
 const Img = styled.img`
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
 `;
 
 // 포켓몬 이름 타이틀
 const Title = styled.h1`
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: bold;
 `;
 
@@ -46,60 +49,25 @@ const Types = styled.div`
 // 포켓몬 타입 컨테이너
 const Type = styled.div`
     padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.9rem;
+    border-radius: 16px;
+    font-size: 0.7rem;
     color: white;
     background-color: ${(props) => props.backgroundColor};
 `;
 
-// 타입 별 맞는 색상을 반환해주는 함수
-const getTypeColor = (type) => {
-    switch (type) {
-        case "노말":
-            return "#A8A77A";
-        case "불꽃":
-            return "#EE8130";
-        case "물":
-            return "#6390F0";
-        case "풀":
-            return "#7AC74C";
-        case "전기":
-            return "#F7D02C";
-        case "얼음":
-            return "#96D9D6";
-        case "격투":
-            return "#C22E28";
-        case "독":
-            return "#A33EA1";
-        case "땅":
-            return "#E2BF65";
-        case "비행":
-            return "#A98FF3";
-        case "에스퍼":
-            return "#F95587";
-        case "벌레":
-            return "#A6B91A";
-        case "바위":
-            return "#B6A136";
-        case "고스트":
-            return "#735797";
-        case "드래곤":
-            return "#6F35FC";
-        case "강철":
-            return "#B7B7CE";
-        case "페어리":
-            return "#D685AD";
-        default:
-            return "#888"; // 알 수 없는 타입은 회색
-    }
-};
-
 const PokemonCard = ({ pokemon, isAdded, onToggleDex }) => {
+    // useNavigate 을 이용하여 페이지 이동 구현
+    const navigate = useNavigate();
+
     return (
-        <Card>
+        <Card
+            onClick={() => {
+                navigate(`/pokemon-detail?id=${pokemon.id}`);
+            }}
+        >
             <Img src={pokemon.img_url} alt={pokemon.korean_name} />
             <Title>{pokemon.korean_name}</Title>
-            <Id>No. {pokemon.id}</Id>
+            <Id>No. {String(pokemon.id).padStart(3, '0')}</Id>
             <Types>
                 {pokemon.types.map((type, idx) => (
                     <Type key={idx + type} backgroundColor={getTypeColor(type)}>
@@ -107,12 +75,12 @@ const PokemonCard = ({ pokemon, isAdded, onToggleDex }) => {
                     </Type>
                 ))}
             </Types>
-            {/* <Btn isAdded={isAdded} onClick={() => onToggleDex(pokemon.id)}>
-                {isAdded ? "삭제" : "추가"}
-            </Btn> */}
             <DexToggleBtn
                 isAdded={isAdded}
-                onClick={() => onToggleDex(pokemon.id)}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleDex(pokemon.id);
+                }}
             />
         </Card>
     );

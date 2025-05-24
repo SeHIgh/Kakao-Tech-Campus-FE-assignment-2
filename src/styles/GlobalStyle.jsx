@@ -1,12 +1,17 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+  *{
+    box-sizing: border-box;
+  }
+
   body {
     font-family: "Helvetica", "Arial", sans-serif;
     line-height: 1.5;
 
     width: 100%;
     min-height: 100dvh;
+    height: 100%;
     
     display: flex;
     flex-direction: column;
@@ -17,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
   #root{
     width: 100%;
     min-height: 100dvh;
+    height: 100%;
   }
 
   button{

@@ -4,6 +4,10 @@ import styled from "styled-components";
 
 // 홈 컨테이너 스타일
 const HomeCont = styled.div`
+    width: 100%;
+    height: 100%;
+    min-height: 100dvh;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;

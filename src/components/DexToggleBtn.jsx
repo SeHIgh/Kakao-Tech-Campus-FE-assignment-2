@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 // 덱 추가 및 삭제 버튼
 const Btn = styled.button`
-    padding: 9px 14px;
+    padding: 8px 12px;
     border: none;
     border-radius: 12px;
-    font-size: 0%.9;
+    font-size: 0.8rem;
     font-weight: bold;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;

@@ -19,6 +19,13 @@ const Card = styled.div`
     align-items: center;
     gap: 6px;
     font-family: "Arial", sans-serif;
+    cursor: pointer;
+
+    transition: all 0.3s ease-in-out;
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
 `;
 
 // 포켓몬 이미지

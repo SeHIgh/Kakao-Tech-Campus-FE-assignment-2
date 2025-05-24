@@ -1,14 +1,15 @@
-import { DexProvider } from "./shared/DexContext";
+import { Provider } from "react-redux";
 import Router from "./shared/Router";
 import GlobalStyle from "./styles/GlobalStyle";
+import store from "./redux/config/configStore";
 
 function App() {
     return (
-        // DexContext 전역 적용
-        <DexProvider>
+        // redux-toolkit을 사용하여 덱 상태 관리
+        <Provider store={store}>
             <GlobalStyle />
             <Router />
-        </DexProvider>
+        </Provider>
     );
 }
 

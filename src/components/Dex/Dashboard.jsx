@@ -3,7 +3,7 @@ import PokemonCard from "./PokemonCard";
 import MOCK_DATA from "../../data/mock";
 import styled from "styled-components";
 import pokeball from "../../assets/pokeball.png";
-import { useDexContext } from "../../shared/DexContext";
+import { useSelector } from "react-redux";
 
 const DashboardCont = styled.div`
     width: 100%;
@@ -85,12 +85,10 @@ const EmptyImg = styled.img`
 `;
 
 // 나만의 포켓몬 덱 대시보드
-const Dashboard = ({ onToggleDex }) => {
-    // 전역 Context를 통해 덱 데이터 가져오기
-    const { dex } = useDexContext();
+const Dashboard = () => {
+    // redux-toolkit을 사용하여 덱 상태 관리
+    const dex = useSelector((state) => state.dex.dex);
     const [pokeList] = useState(MOCK_DATA);
-
-    // null이 아닌 id만 추출
     const filledDex = dex.filter((id) => id !== null);
     const emptyCount = 6 - filledDex.length;
 
@@ -105,8 +103,6 @@ const Dashboard = ({ onToggleDex }) => {
                         <PokemonCard
                             key={id}
                             pokemon={pokemon}
-                            isAdded={dex.includes(pokemon.id)}
-                            onToggleDex={onToggleDex}
                         />
                     );
                 })}

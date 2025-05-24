@@ -1,13 +1,14 @@
 import styled from "styled-components";
-import { useDexContext } from "../shared/DexContext";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { toggleDex } from "../redux/slices/dexSlice";
 
 // 덱 추가 및 삭제 버튼
 const Btn = styled.button`
-    padding: 8px 12px;
+    padding: 9px 14px;
     border: none;
     border-radius: 12px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: bold;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
@@ -21,17 +22,23 @@ const Btn = styled.button`
 `;
 
 const DexToggleBtn = ({ pokemonId }) => {
-    const { dex, handleToggleDex } = useDexContext();
+    // redux-toolkit을 사용하여 덱 상태 관리
+    const dex = useSelector((state) => state.dex.dex);
+    const dispatch = useDispatch();
     const isAdded = dex.includes(pokemonId);
 
     const handleClick = (e) => {
         e.stopPropagation();
-        handleToggleDex(
-            pokemonId,
-            () => toast.success("포켓몬이 덱에 추가되었습니다!"),
-            () => toast.info("포켓몬이 덱에서 삭제되었습니다."),
-            () => toast.error("포켓몬을 더 이상 선택할 수 없습니다.")
-        );
+        if (!isAdded && dex.filter((id) => id !== null).length >= 6) {
+            toast.error("포켓몬을 더 이상 선택할 수 없습니다.");
+            return;
+        }
+        dispatch(toggleDex(pokemonId));
+        if (isAdded) {
+            toast.info("포켓몬이 덱에서 삭제되었습니다.");
+        } else {
+            toast.success("포켓몬이 덱에 추가되었습니다!");
+        }
     };
 
     return (

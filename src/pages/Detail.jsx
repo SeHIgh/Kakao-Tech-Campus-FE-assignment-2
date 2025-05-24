@@ -6,8 +6,6 @@ import DexToggleBtn from "../components/DexToggleBtn";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const DEX_STORAGE_KEY = "myPokemonDex";
-
 // 스타일 컴포넌트
 const DetailCont = styled.div`
     width: 100%;
@@ -113,7 +111,7 @@ export const Detail = () => {
             />
             <Img src={pokemon.img_url} alt={pokemon.korean_name} />
             <Name>{pokemon.korean_name}</Name>
-            <Id>No. {pokemon.id}</Id>
+            <Id>No. {String(pokemon.id).padStart(3, '0')}</Id>
             <Types>
                 {pokemon.types.map((type) => (
                     <Type key={type} backgroundColor={getTypeColor(type)}>
